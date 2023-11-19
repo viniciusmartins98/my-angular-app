@@ -1,20 +1,20 @@
 import { Injectable } from '@angular/core';
-import { HousingLocation } from './housing-location';
-import { HttpClient } from '@angular/common/http';
+import { HousingLocation } from '../interfaces/housing-location';
 import { Observable } from 'rxjs';
+import { CustomHttpClient } from './custom-http-client.service';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class HousingService {
-  constructor(private httpClient: HttpClient) {
-    httpClient.options('http://localhost:3000');
-  }
+  constructor(private httpClient: CustomHttpClient) {}
 
   getAllHousingLocation(): Observable<HousingLocation[]> {
-    return this.httpClient.get<HousingLocation[]>('/locations');
+    return this.httpClient.get<HousingLocation[]>('locations');
   }
 
   getHousingLocationById(id: Number): Observable<HousingLocation> {
-    return this.httpClient.get<HousingLocation>(`/locations/${id}`);
+    return this.httpClient.get<HousingLocation>(`locations/${id}`);
   }
 
   submitApplication(firstName: string, lastName: string, email: string) {
